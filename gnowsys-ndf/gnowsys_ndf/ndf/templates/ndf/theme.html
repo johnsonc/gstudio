@@ -246,6 +246,7 @@
 {% user_access_policy groupid request.user as user_access %}
 
       <div id="myModal2" class="reveal-modal" style="height:500px;overflow:hidden;width:80%" data-reveal>  <a class="close-reveal-modal">&#215;</a> </div> 
+<<<<<<< Updated upstream
 
 <header class="row" >
   <dl class="tabs" data-tab data-options="deep_linking:true">
@@ -256,6 +257,18 @@
 -->
 </header>
 
+=======
+
+<header class="row" >
+  <dl class="tabs" data-tab data-options="deep_linking:true">
+    <dd class="active"><a href="#panel1-1" id="p1"></i> Theme Structure </a></dd>
+  <dd ><a href="#panel1-2" id="p2" name="Tree View" onClick="$('#example').empty()"> Tree View </a></dd>
+ <!-- 
+  <dd ><a href="#panel1-3" id="p3" name="Collapsible View" onClick="$('#example').empty()"> Reingold Tillford Tree </a></dd>
+-->
+</header>
+
+>>>>>>> Stashed changes
 <div class="tabs-content" id="tag">
   <div class="content" id="panel1-1">
 	{% if themes_hierarchy %}
