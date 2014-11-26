@@ -730,6 +730,3 @@ def topic_detail_view(request, group_id, app_Id=None):
 	                                },
 	                                context_instance = RequestContext(request)
   )
-
-
-

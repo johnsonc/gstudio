@@ -599,7 +599,7 @@ def search_drawer(request, group_id):
       )    
       
 
-####Bellow part is for manipulating theme topic hierarchy####
+####Below part is for manipulating theme topic hierarchy####
 def get_collection_list(collection_list, node):
   inner_list = []
   error_list = []
@@ -657,10 +657,36 @@ def get_tree_hierarchy(request, group_id, node_id):
             node_type = collection.Node.one({'_id': ObjectId(obj.member_of[0])}).name
             collection_list.append({'name': obj.name, 'id': obj.pk, 'node_type': node_type})
             collection_list = get_collection_list(collection_list, obj)
-
     data = collection_list
-
     return HttpResponse(json.dumps(data))
+
+def get_tree_hierarchy_json(request, group_id, node_id):
+
+    node = collection.Node.one({'_id':ObjectId(node_id)})
+    data = ""
+    collection_list = []
+    themes_list = []
+
+    theme_node = collection.Node.one({'_id': ObjectId(node._id) })
+    if theme_node.collection_set:
+      for e in theme_node.collection_set:
+        objs = collection.Node.one({'_id': ObjectId(e) })
+        for l in objs.collection_set:
+          themes_list.append(l)
+
+      for each in theme_node.collection_set:
+        obj = collection.Node.one({'_id': ObjectId(each) })
+        if obj._id not in themes_list:
+          if theme_item_GST._id in obj.member_of or topic_GST._id in obj.member_of:
+
+            node_type = collection.Node.one({'_id': ObjectId(obj.member_of[0])}).name
+            collection_list.append({'name': obj.name, 'id': obj.pk, 'node_type': node_type})
+            collection_list = get_collection_list(collection_list, obj)
+
+    data = { "name": " ", "children": collection_list }
+    return HttpResponse(json.dumps(data), mimetype='application/json')
+
+
 
 ####End of manipulating theme topic hierarchy####
 
@@ -1208,7 +1234,17 @@ def check_module_exits(module_set_md5):
         return 'True'
     else:
         return 'False'
-        
+   
+
+def topic_details_only(request, group_id, node_id):
+  return render_to_response('ndf/topic_details_only.html', 
+	                                { 'node': node_id,
+	                                  'group_id': group_id,
+	                                },
+	                                context_instance = RequestContext(request)
+  )
+
+     
 
 
 def walk(node):
